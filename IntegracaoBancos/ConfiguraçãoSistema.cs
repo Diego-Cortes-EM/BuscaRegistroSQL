@@ -16,5 +16,15 @@ namespace IntegracaoBancos
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (ofdArquivo.ShowDialog() != DialogResult.OK)
+            {
+                return;
+            }
+            textBoxBDEM.Text = ofdArquivo.FileName;
+            
+        }
     }
 }

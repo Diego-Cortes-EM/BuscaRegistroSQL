@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace IntegracaoBancos
 {
     class IntegracaoBancos
     {
+         [STAThread]
         static void Main(string[] args)
         {
             int idUltimoAlunoBuscado = 0;

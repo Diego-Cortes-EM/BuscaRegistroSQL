@@ -37,6 +37,10 @@
             this.labelUsuario = new System.Windows.Forms.Label();
             this.textBoxSenha = new System.Windows.Forms.TextBox();
             this.labelSenha = new System.Windows.Forms.Label();
+            this.textBoxBDEM = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.ofdArquivo = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -113,11 +117,44 @@
             this.labelSenha.TabIndex = 7;
             this.labelSenha.Text = "Senha :";
             // 
+            // textBoxBDEM
+            // 
+            this.textBoxBDEM.Location = new System.Drawing.Point(21, 393);
+            this.textBoxBDEM.Name = "textBoxBDEM";
+            this.textBoxBDEM.Size = new System.Drawing.Size(313, 20);
+            this.textBoxBDEM.TabIndex = 10;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(21, 364);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 13);
+            this.label1.TabIndex = 9;
+            this.label1.Text = "Endereço Banco do EM";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(337, 391);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(50, 23);
+            this.button1.TabIndex = 11;
+            this.button1.Text = "Buscar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // ofdArquivo
+            // 
+            this.ofdArquivo.FileName = "openFileDialog1";
+            // 
             // ConfiguraçãoSistema
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(713, 508);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.textBoxBDEM);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxSenha);
             this.Controls.Add(this.labelSenha);
             this.Controls.Add(this.textBoxUsuario);
@@ -146,5 +183,9 @@
         private System.Windows.Forms.Label labelUsuario;
         private System.Windows.Forms.TextBox textBoxSenha;
         private System.Windows.Forms.Label labelSenha;
+        private System.Windows.Forms.TextBox textBoxBDEM;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.OpenFileDialog ofdArquivo;
     }
 }
