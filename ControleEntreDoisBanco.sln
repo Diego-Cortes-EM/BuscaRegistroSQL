@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControleEntreDoisBanco", "C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IntegracaoBancos", "IntegracaoBancos\IntegracaoBancos.csproj", "{3D700D36-372D-430C-B133-9FE1932867B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EMCatraca.Configuracao", "D:\WorkDiego\EM\Catraca\EMCatraca\EMCatraca.Configuracao\EMCatraca.Configuracao.csproj", "{021F38E9-145E-4763-AB99-9EA39F1A1DAA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{3D700D36-372D-430C-B133-9FE1932867B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D700D36-372D-430C-B133-9FE1932867B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D700D36-372D-430C-B133-9FE1932867B6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{021F38E9-145E-4763-AB99-9EA39F1A1DAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{021F38E9-145E-4763-AB99-9EA39F1A1DAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{021F38E9-145E-4763-AB99-9EA39F1A1DAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{021F38E9-145E-4763-AB99-9EA39F1A1DAA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
