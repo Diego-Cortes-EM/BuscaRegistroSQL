@@ -60,7 +60,7 @@ namespace ControleEntreDoisBanco
 
 
         }
-        public RegistroEntrada BuscaUltimoRegistro()
+        public int BuscaUltimoRegistro()
         {
             var registroEntradas = new List<RegistroEntrada>();
             using (SqlConnection sqlConn = SqlConecao())
@@ -83,8 +83,10 @@ namespace ControleEntreDoisBanco
 
                 sqlConn.Close();
             }
-            var registro = registroEntradas[registroEntradas.Count-1];
-            return registro;
+
+            var registro = registroEntradas[0];
+            
+            return registro.Id == 0 ? 0 : registro.Id+1;
         }
     }
 }

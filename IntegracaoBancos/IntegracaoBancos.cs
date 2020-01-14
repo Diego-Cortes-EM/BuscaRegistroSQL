@@ -14,6 +14,7 @@ namespace IntegracaoBancos
         {
             int idUltimoAlunoBuscado = new LeituraConfiguração().lerRegistro();
             var ControleData = DateTime.Now;
+            var InserirDados = new MapeadorDadosEM();
             while (true)
             {
                 var ehMaior = DateTime.Compare(ControleData, DateTime.Now);
@@ -30,6 +31,10 @@ namespace IntegracaoBancos
                             if (registro.Equals(registroEntradas.Last()))
                             {
                                 idUltimoAlunoBuscado = registro.Id;
+                            }
+                            if (InserirDados.ConsultaAluno(registro.Matricula))
+                            {
+                                InserirDados.RegistraEntrada(registro);
                             }
                             var sentido = registro.Sentido == 1 ? 'E' : 'S';
                             Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");

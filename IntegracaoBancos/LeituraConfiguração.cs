@@ -60,7 +60,7 @@ namespace IntegracaoBancos
                     if (linha.Contains("BDEM:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.localizacaoEM = linha.Replace("senha", "");
+                        configuracao.localizacaoEM = linha.Replace("BDEM:", "");
                     }
 
                 }
