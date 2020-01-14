@@ -12,9 +12,7 @@ namespace IntegracaoBancos
          [STAThread]
         static void Main(string[] args)
         {
-            var leitura = new LeituraConfiguração();
-            var teste = leitura.lerConfiguracao();
-            int idUltimoAlunoBuscado = 0;
+            int idUltimoAlunoBuscado = new LeituraConfiguração().lerRegistro();
             var ControleData = DateTime.Now;
             while (true)
             {

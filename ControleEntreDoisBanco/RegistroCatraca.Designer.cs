@@ -41,7 +41,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(420, 52);
+            this.checkBox1.Location = new System.Drawing.Point(248, 53);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(63, 17);
             this.checkBox1.TabIndex = 0;
@@ -52,7 +52,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(420, 75);
+            this.checkBox2.Location = new System.Drawing.Point(248, 76);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(53, 17);
             this.checkBox2.TabIndex = 1;
@@ -88,7 +88,7 @@
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(417, 26);
+            this.label8.Location = new System.Drawing.Point(245, 27);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(43, 13);
             this.label8.TabIndex = 9;
@@ -113,7 +113,7 @@
             // 
             // RegistroCatraca
             // 
-            this.ClientSize = new System.Drawing.Size(505, 155);
+            this.ClientSize = new System.Drawing.Size(330, 158);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label8);
             this.Controls.Add(this.label6);

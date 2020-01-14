@@ -59,15 +59,5 @@ namespace IntegracaoBancos.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap LogoEscolarManager {
-            get {
-                object obj = ResourceManager.GetObject("LogoEscolarManager", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

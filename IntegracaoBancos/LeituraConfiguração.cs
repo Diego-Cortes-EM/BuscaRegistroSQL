@@ -14,7 +14,7 @@ namespace IntegracaoBancos
             StreamWriter writer = new StreamWriter("Configuração.txt", true);
             using (writer)
             {
-                // Escreve uma nova linhas no final do arquivo
+                // Escreve uma nova linha no final do arquivo
                 writer.WriteLine("servidor: " + configuraçãoServidores.nomeServidor);
                 writer.WriteLine("banco: " + configuraçãoServidores.nomeBanco);
                 writer.WriteLine("usuario: " + configuraçãoServidores.usuario);
@@ -30,43 +30,68 @@ namespace IntegracaoBancos
             {
                 string linha;
 
-                // Lê cada uma das linhas do arquivo
-                var linhas = reader.ReadLine();
-
-                while (linhas != null)
+                while ((linha = reader.ReadLine()) != null)
                 {
                     // A linha possui a informação que procuro?
-                    if (linhas.Contains("servidor:"))
+                    if (linha.Contains("servidor:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeServidor = linhas.Replace("servidor:", "");
-                        break;
+                        configuracao.nomeServidor = linha.Replace("servidor:", "");
                     }
                     else
-                    if (linhas.Contains("banco: "))
+                    if (linha.Contains("banco: "))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeServidor = linhas.Replace("banco: ", "");
-                        break;
+                        configuracao.nomeBanco = linha.Replace("banco: ", "");
                     }
                     else
-                    if (linhas.Contains("usuario:"))
+                    if (linha.Contains("usuario:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeServidor = linhas.Replace("usuario", "");
-                        break;
+                        configuracao.usuario = linha.Replace("usuario", "");
                     }
                     else
-                    if (linhas.Contains("senha:"))
+                    if (linha.Contains("senha:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeServidor = linhas.Replace("senha", "");
-                        break;
+                        configuracao.senha = linha.Replace("senha", "");
                     }
-                    linhass = reader.ReadLine();
+                    else
+                    if (linha.Contains("BDEM:"))
+                    {
+                        // Sim. Então guarda a informação e abandona o loop
+                        configuracao.localizacaoEM = linha.Replace("senha", "");
+                    }
+
                 }
             }
             return configuracao;
+        }
+        public void UltimoRegistro(RegistroEntrada registroEntrada)
+        {
+            File.Delete("UltimoRegistro.txt");
+            StreamWriter writer = new StreamWriter("UltimoRegistro.txt", true);
+            using (writer)
+            {
+                // Escreve uma nova linha no final do arquivo
+                writer.WriteLine(registroEntrada.Id.ToString());
+            }
+        }
+
+        public int lerRegistro()
+        {
+            int idRegistro = 0;
+            StreamReader reader = new StreamReader("UltimoRegistro.txt", true);
+            using (reader)
+            {
+                string linha;
+
+                while ((linha = reader.ReadLine()) != null)
+                {
+                    idRegistro = Convert.ToInt32(linha);
+                }
+            }
+            return idRegistro;
         }
     }
 }
