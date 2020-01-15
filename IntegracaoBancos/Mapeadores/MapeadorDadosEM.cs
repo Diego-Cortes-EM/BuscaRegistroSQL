@@ -34,8 +34,9 @@ namespace IntegracaoBancos
         {
             var sentido = registroEntrada.Sentido == 1 ? 'E' : 'S';
 
-            string comando = "UPDATE INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO)" +
-                            $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, '{tranformahora(registroEntrada.Horario)}','{sentido}'); ";
+            string comando = $"UPDATE TBREGISTROACESSO SET REGACGIRO = '{sentido}'" +
+                        $"WHERE REGACMATRICULA = {registroEntrada.Matricula} AND REGACTIPOPESSOA = 1 AND " +
+                        $"REGACDIA = {tranformaData(registroEntrada.Horario)} AND REGACHORA = '{tranformahora(registroEntrada.Horario)}'";
             using (var conn = SqlConecao())
             {
                 conn.Open();
@@ -43,8 +44,9 @@ namespace IntegracaoBancos
 
                 if(cmd.ExecuteNonQuery() == 0)
                 {
-                    cmd.CommandText = "UPDATE INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO)" +
-                            $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, '{tranformahora(registroEntrada.Horario)}','{sentido}'); ";
+                    cmd.CommandText = "INSERT INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO)" +
+                            $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, " +
+                            $"'{tranformahora(registroEntrada.Horario)}','{sentido}'); ";
                     
                     cmd.ExecuteNonQuery();
                 }
@@ -55,13 +57,14 @@ namespace IntegracaoBancos
 
         private string tranformahora(DateTime horario)
         {
-            return $"{horario.Hour}:{horario.Minute}:{horario.Second}";
+            var aux = horario.ToString("HH:mm:ss");
+            return horario.ToString("HH:mm:ss");
         }
 
         private string tranformaData(DateTime horario)
         {
-            var aux = $"{horario.Year}{horario.Month}{horario.Day}";
-            return $"{horario.Year}{horario.Month}{horario.Day}";
+            var aux = horario.ToString("yyyyMMdd");
+            return horario.ToString("yyyyMMdd"); 
         }
     }
 }

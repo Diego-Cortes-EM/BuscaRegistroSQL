@@ -83,10 +83,15 @@ namespace ControleEntreDoisBanco
 
                 sqlConn.Close();
             }
-
-            var registro = registroEntradas[0];
+            var registro = new RegistroEntrada();
             
-            return registro.Id == 0 ? 0 : registro.Id+1;
+            if (registroEntradas.Count > 1)
+            {
+                registro = registroEntradas[registroEntradas.Count - 1];
+                return registro.Id + 1;
+            }
+
+            return registro.Id;
         }
     }
 }

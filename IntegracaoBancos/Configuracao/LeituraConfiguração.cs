@@ -73,7 +73,6 @@ namespace IntegracaoBancos
             StreamWriter writer = new StreamWriter("UltimoRegistro.txt", true);
             using (writer)
             {
-                // Escreve uma nova linha no final do arquivo
                 writer.WriteLine(registroEntrada.Id.ToString());
             }
         }

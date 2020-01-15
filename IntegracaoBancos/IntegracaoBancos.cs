@@ -31,6 +31,7 @@ namespace IntegracaoBancos
                             if (registro.Equals(registroEntradas.Last()))
                             {
                                 idUltimoAlunoBuscado = registro.Id;
+                                new LeituraConfiguração().UltimoRegistro(registro);
                             }
                             if (InserirDados.ConsultaAluno(registro.Matricula))
                             {

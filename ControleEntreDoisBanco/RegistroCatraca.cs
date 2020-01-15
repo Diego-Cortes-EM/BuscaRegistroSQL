@@ -9,7 +9,7 @@ namespace ControleEntreDoisBanco
         public RegistroCatraca()
         {
             InitializeComponent();
-            UltimoRegistro = new MapeadorDadosSql().BuscaUltimoRegistro() + 1;
+            UltimoRegistro = new MapeadorDadosSql().BuscaUltimoRegistro();
             textBoxid.Text = UltimoRegistro.ToString();
             textBoxid.Enabled = false;
         }
