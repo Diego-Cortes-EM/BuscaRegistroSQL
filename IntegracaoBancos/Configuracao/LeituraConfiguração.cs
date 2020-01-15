@@ -22,7 +22,7 @@ namespace IntegracaoBancos
                 writer.WriteLine("BDEM: " + configuraçãoServidores.localizacaoEM);
             }
         }
-        public ConfiguracaoServidores lerConfiguracao()
+        public ConfiguracaoServidores LerConfiguracao()
         {
             ConfiguracaoServidores configuracao = new ConfiguracaoServidores();
             StreamReader reader = new StreamReader("Configuração.txt", true);

@@ -35,7 +35,7 @@ namespace IntegracaoBancos
 
         private SqlConnection SqlConecao()
         {
-            var configuracao = new LeituraConfiguração().lerConfiguracao();
+            var configuracao = new LeituraConfiguração().LerConfiguracao();
             string stringdeConecao = $"server={configuracao.nomeServidor};database={configuracao.nomeBanco};Integrated Security=SSPI;User Id={configuracao.usuario};Password={configuracao.senha};";
             string connectionString = stringdeConecao;
             return new SqlConnection(connectionString);
@@ -60,7 +60,7 @@ namespace IntegracaoBancos
 
 
         }
-        public RegistroEntrada BuscaUltimoRegistro()
+        public int BuscaUltimoRegistro()
         {
             var registroEntradas = new List<RegistroEntrada>();
             using (SqlConnection sqlConn = SqlConecao())
@@ -83,8 +83,15 @@ namespace IntegracaoBancos
 
                 sqlConn.Close();
             }
-            var registro = registroEntradas[registroEntradas.Count - 1];
-            return registro;
+            var registro = new RegistroEntrada();
+
+            if (registroEntradas.Count > 1)
+            {
+                registro = registroEntradas[registroEntradas.Count - 1];
+                return registro.Id + 1;
+            }
+
+            return registro.Id;
         }
     }
 }

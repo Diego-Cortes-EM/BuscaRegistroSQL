@@ -11,7 +11,7 @@ namespace IntegracaoBancos
     {
         private FbConnection SqlConecao()
         {
-            var configuracao = new LeituraConfiguração().lerConfiguracao();
+            var configuracao = new LeituraConfiguração().LerConfiguracao();
             string stringdeConecao = $@"DataSource=localhost; Database={configuracao.localizacaoEM}; username=sysdba; password =masterkey";
             string connectionString = stringdeConecao;
             return new FbConnection(connectionString);

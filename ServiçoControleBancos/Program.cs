@@ -5,7 +5,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IntermediadorDeBancos
+namespace ServicoControleBancos
 {
     static class Program
     {
@@ -17,7 +17,7 @@ namespace IntermediadorDeBancos
             ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
-                new ControladorBancos(args)
+                new ControleBancos(args)
             };
             ServiceBase.Run(ServicesToRun);
         }

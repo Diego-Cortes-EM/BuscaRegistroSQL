@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegracaoBancos;
+using System;
 using System.Windows.Forms;
 
 namespace ControleEntreDoisBanco

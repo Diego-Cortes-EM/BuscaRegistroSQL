@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MapeadorDadosSql.cs" />
     <Compile Include="RegistroCatraca.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,7 +57,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RegistroEntrada.cs" />
     <EmbeddedResource Include="RegistroCatraca.resx">
       <DependentUpon>RegistroCatraca.cs</DependentUpon>
     </EmbeddedResource>
@@ -84,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IntegracaoBancos\IntegracaoBancos.csproj">
+      <Project>{3d700d36-372d-430c-b133-9fe1932867b6}</Project>
+      <Name>IntegracaoBancos</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

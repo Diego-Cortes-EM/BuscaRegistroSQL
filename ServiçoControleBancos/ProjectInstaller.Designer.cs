@@ -1,4 +1,4 @@
-﻿namespace IntermediadorDeBancos
+﻿namespace ServicoControleBancos
 {
     partial class ProjectInstaller
     {
@@ -33,15 +33,15 @@
             // 
             // serviceProcessInstaller1
             // 
+            this.serviceProcessInstaller1.Account = System.ServiceProcess.ServiceAccount.LocalSystem;
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.DelayedAutoStart = true;
-            this.serviceInstaller1.Description = "Controle do banco de dados SQL com o banco do Escolar Manager ";
-            this.serviceInstaller1.DisplayName = "Controlador de Banco ";
-            this.serviceInstaller1.ServiceName = "ControladorDeBanco";
+            this.serviceInstaller1.Description = "Monitoramento entre bancos Escolar Manager e Sql";
+            this.serviceInstaller1.DisplayName = "Monitoramento De Bancos";
+            this.serviceInstaller1.ServiceName = "Monitoramento de Bancos";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller
