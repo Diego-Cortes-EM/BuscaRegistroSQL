@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 
 namespace IntegracaoBancos
 {
-    class MapeadorDadosSql
+    public class MapeadorDadosSql
     {
         public List<RegistroEntrada> BuscaRegistroDoDia(int ultimoAluno)
         {

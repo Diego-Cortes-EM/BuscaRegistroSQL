@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegracaoBancos
 {
-    class MapeadorDadosEM
+    public class MapeadorDadosEM
     {
         private FbConnection SqlConecao()
         {

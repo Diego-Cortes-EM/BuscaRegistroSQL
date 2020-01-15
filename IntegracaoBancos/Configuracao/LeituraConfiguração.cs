@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace IntegracaoBancos
 {
-    class LeituraConfiguração
+    public class LeituraConfiguração
     {
         public void gravarConfiguracao(ConfiguracaoServidores configuraçãoServidores)
         {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace IntegracaoBancos
 {
-    class ConfiguracaoServidores
+    public class ConfiguracaoServidores
     {
         public string nomeServidor { get; set; }
         public string nomeBanco { get; set; }
