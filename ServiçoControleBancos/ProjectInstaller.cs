@@ -6,7 +6,7 @@ using System.Configuration.Install;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ServicoControleBancos
+namespace ServiçoControleBancos
 {
     [RunInstaller(true)]
     public partial class ProjectInstaller : System.Configuration.Install.Installer
@@ -14,12 +14,6 @@ namespace ServicoControleBancos
         public ProjectInstaller()
         {
             InitializeComponent();
-        }
-        protected override void OnBeforeInstall(IDictionary savedState)
-        {
-            string parameter = "MySource1\" \"MyLogFile1";
-            Context.Parameters["assemblypath"] = "\"" + Context.Parameters["assemblypath"] + "\" \"" + parameter + "\"";
-            base.OnBeforeInstall(savedState);
         }
     }
 }

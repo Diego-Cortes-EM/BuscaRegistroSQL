@@ -11,7 +11,7 @@ namespace IntegracaoBancos
             var registroEntradas = new List<RegistroEntrada>();
             using (SqlConnection sqlConn = SqlConecao())
             {
-                sqlConn.Open();
+
                 var cmd = new SqlCommand("SELECT [CD_LOG_ACESSO] ,[NU_MATRICULA] ,[NU_DATA_REQUISICAO] ,[TP_SENTIDO_CONSULTA] FROM [dbo].[LOG_ACESSO] " +
                                           $"WHERE [CD_LOG_ACESSO] > {ultimoAluno} ORDER by [CD_LOG_ACESSO]", sqlConn);
                 using (var dr = cmd.ExecuteReader())
@@ -28,17 +28,31 @@ namespace IntegracaoBancos
                     }
                 }
 
-                sqlConn.Close();
+
             }
             return registroEntradas;
         }
 
         private SqlConnection SqlConecao()
         {
+
             var configuracao = new LeituraConfiguração().LerConfiguracao();
             string stringdeConecao = $"server={configuracao.nomeServidor};database={configuracao.nomeBanco};Integrated Security=SSPI;User Id={configuracao.usuario};Password={configuracao.senha};";
-            string connectionString = stringdeConecao;
-            return new SqlConnection(connectionString);
+
+            var stringBuilder = new SqlConnectionStringBuilder(stringdeConecao);
+
+            var cn = new SqlConnection(stringBuilder.ConnectionString);
+            try
+            {
+                cn.Open();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return cn;
         }
 
         public void InserirRegistros(RegistroEntrada registroEntrada)
@@ -54,7 +68,7 @@ namespace IntegracaoBancos
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 

@@ -24,8 +24,9 @@ namespace IntegracaoBancos
         }
         public ConfiguracaoServidores LerConfiguracao()
         {
+            var caminho = AppDomain.CurrentDomain.BaseDirectory;
             ConfiguracaoServidores configuracao = new ConfiguracaoServidores();
-            StreamReader reader = new StreamReader("Configuração.txt", true);
+            StreamReader reader = new StreamReader(caminho + "Configuração.txt", true);
             using (reader)
             {
                 string linha;
@@ -79,8 +80,9 @@ namespace IntegracaoBancos
 
         public int lerRegistro()
         {
+            var caminho = AppDomain.CurrentDomain.BaseDirectory;
             int idRegistro = 0;
-            StreamReader reader = new StreamReader("UltimoRegistro.txt", true);
+            StreamReader reader = new StreamReader(caminho + "UltimoRegistro.txt", true);
             using (reader)
             {
                 string linha;

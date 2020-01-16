@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IntegracaoBancos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,7 @@ namespace ServicoControleBancos
     public partial class ControleBancos : ServiceBase
     {
         private int eventId = 1;
+
 
         public ControleBancos(string[] args)
         {
@@ -58,7 +60,28 @@ namespace ServicoControleBancos
 
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
+            MapeadorDadosEM InserirDados = new MapeadorDadosEM();
+            int idUltimoAlunoBuscado = new LeituraConfiguração().lerRegistro();
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
+            var DadosBuscados = new MapeadorDadosSql();
+            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroDoDia(idUltimoAlunoBuscado);
+            if (registroEntradas.Count != 0)
+            {
+                foreach (var registro in registroEntradas)
+                {
+                    if (registro.Equals(registroEntradas.Last()))
+                    {
+                        idUltimoAlunoBuscado = registro.Id;
+                        new LeituraConfiguração().UltimoRegistro(registro);
+                    }
+                    if (InserirDados.ConsultaAluno(registro.Matricula))
+                    {
+                        InserirDados.RegistraEntrada(registro);
+                    }
+                    var sentido = registro.Sentido == 1 ? 'E' : 'S';
+                    Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
+                }
+            }
         }
 
         protected override void OnStop()

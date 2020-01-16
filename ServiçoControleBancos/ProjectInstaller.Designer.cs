@@ -1,4 +1,4 @@
-﻿namespace ServicoControleBancos
+﻿namespace ServiçoControleBancos
 {
     partial class ProjectInstaller
     {
@@ -39,9 +39,9 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "Monitoramento entre bancos Escolar Manager e Sql";
-            this.serviceInstaller1.DisplayName = "Monitoramento De Bancos";
-            this.serviceInstaller1.ServiceName = "Monitoramento de Bancos";
+            this.serviceInstaller1.Description = "Controlador de banco em e SQL Server";
+            this.serviceInstaller1.DisplayName = "Registro de Acesso Escolar Manager";
+            this.serviceInstaller1.ServiceName = "controlador";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 
             // ProjectInstaller

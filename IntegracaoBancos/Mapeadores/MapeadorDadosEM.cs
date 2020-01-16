@@ -44,9 +44,9 @@ namespace IntegracaoBancos
 
                 if(cmd.ExecuteNonQuery() == 0)
                 {
-                    cmd.CommandText = "INSERT INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO)" +
+                    cmd.CommandText = "INSERT INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO, REGACAUTOMATICO)" +
                             $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, " +
-                            $"'{tranformahora(registroEntrada.Horario)}','{sentido}'); ";
+                            $"'{tranformahora(registroEntrada.Horario)}','{sentido}','S'); ";
                     
                     cmd.ExecuteNonQuery();
                 }
