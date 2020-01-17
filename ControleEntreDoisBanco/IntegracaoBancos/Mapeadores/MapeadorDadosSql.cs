@@ -28,7 +28,7 @@ namespace IntegracaoBancos
                     }
                 }
 
-                sqlConn.Close();
+
             }
             return registroEntradas;
         }
@@ -92,8 +92,6 @@ namespace IntegracaoBancos
                         });
                     }
                 }
-
-                sqlConn.Close();
             }
             var registro = new RegistroEntrada();
 
