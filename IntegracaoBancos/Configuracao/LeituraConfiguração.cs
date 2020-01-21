@@ -49,13 +49,13 @@ namespace IntegracaoBancos
                     if (linha.Contains("usuario:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.usuario = linha.Replace("usuario", "");
+                        configuracao.usuario = linha.Replace("usuario:", "");
                     }
                     else
                     if (linha.Contains("senha:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.senha = linha.Replace("senha", "");
+                        configuracao.senha = linha.Replace("senha:", "");
                     }
                     else
                     if (linha.Contains("BDEM:"))
