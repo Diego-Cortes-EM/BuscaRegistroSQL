@@ -1,6 +1,7 @@
 ﻿using FirebirdSql.Data.FirebirdClient;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,18 @@ namespace IntegracaoBancos
             var configuracao = new LeituraConfiguração().LerConfiguracao();
             string stringdeConecao = $@"DataSource=localhost; Database={configuracao.localizacaoEM}; username=sysdba; password =masterkey";
             string connectionString = stringdeConecao;
-            return new FbConnection(connectionString);
+            var cn = new FbConnection(connectionString); 
+            try
+            {
+                cn.Open();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+            return cn;
         }
 
         public bool ConsultaAluno(int matricula)
@@ -22,12 +34,13 @@ namespace IntegracaoBancos
             string SqlConsulta = $"SELECT ALUNMATRICULA FROM TBALUNO WHERE ALUNMATRICULA = {matricula};";
             using (var conn = SqlConecao())
             {
-                conn.Open();
+                
                 var cmd = new FbCommand(SqlConsulta, conn);
                 using (var dr = cmd.ExecuteReader())
                 {
                     return dr.HasRows;
                 }
+                conn.Close();
             }
         }
         public void RegistraEntrada(RegistroEntrada registroEntrada)
@@ -39,7 +52,6 @@ namespace IntegracaoBancos
                         $"REGACDIA = {tranformaData(registroEntrada.Horario)} AND REGACHORA = '{tranformahora(registroEntrada.Horario)}'";
             using (var conn = SqlConecao())
             {
-                conn.Open();
                 var cmd = new FbCommand(comando, conn);
 
                 if(cmd.ExecuteNonQuery() == 0)

@@ -65,12 +65,12 @@ namespace IntegracaoBancos
             try
             {
                 var sqlConn = SqlConecao();
-                string sql = $"INSERT INTO [dbo].[LOG_ACESSO]([CD_LOG_ACESSO], [NU_MATRICULA], [NU_DATA_REQUISICAO], [TP_SENTIDO_CONSULTA]) VALUES({registroEntrada.Id}, {registroEntrada.Matricula}, '{registroEntrada.Horario}', {registroEntrada.Sentido})";
+                string sql = $"INSERT INTO [dbo].[LOG_ACESSO](CD_LOG_ACESSO, NU_MATRICULA, NU_DATA_REQUISICAO, TP_SENTIDO_CONSULTA) VALUES({registroEntrada.Id}, {registroEntrada.Matricula}, '{registroEntrada.Horario.ToString("yyyy/MM/dd hh:mm:ss")}', {registroEntrada.Sentido})";
                 var cmd = new SqlCommand(sql, sqlConn);
                 cmd.ExecuteNonQuery();
                 sqlConn.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
