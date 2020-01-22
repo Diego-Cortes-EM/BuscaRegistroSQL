@@ -37,11 +37,16 @@ namespace IntegracaoBancos
         {
 
             var configuracao = new LeituraConfiguração().LerConfiguracao();
-            string stringdeConecao = $"server={configuracao.nomeServidor};database={configuracao.nomeBanco};Integrated Security=SSPI;User Id={configuracao.usuario};Password={configuracao.senha};";
+            var stringdeConecao = new SqlConnectionStringBuilder
+            {
+                DataSource = $"{configuracao.nomeServidor}",
+                InitialCatalog = $"{configuracao.nomeBanco}",
+                UserID = $"{configuracao.usuario}",
+                Password = $"{configuracao.senha}",
+                IntegratedSecurity = false
+            }; 
 
-            var stringBuilder = new SqlConnectionStringBuilder(stringdeConecao);
-
-            var cn = new SqlConnection(stringBuilder.ConnectionString);
+            var cn = new SqlConnection(stringdeConecao.ConnectionString);
             try
             {
                 cn.Open();

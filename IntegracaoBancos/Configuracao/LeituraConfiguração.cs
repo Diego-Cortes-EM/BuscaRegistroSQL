@@ -37,31 +37,31 @@ namespace IntegracaoBancos
                     if (linha.Contains("servidor:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeServidor = linha.Replace("servidor:", "");
+                        configuracao.nomeServidor = linha.Replace("servidor:", "").Trim();
                     }
                     else
                     if (linha.Contains("banco: "))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.nomeBanco = linha.Replace("banco: ", "");
+                        configuracao.nomeBanco = linha.Replace("banco: ", "").Trim();
                     }
                     else
                     if (linha.Contains("usuario:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.usuario = linha.Replace("usuario:", "");
+                        configuracao.usuario = linha.Replace("usuario:", "").Trim();
                     }
                     else
                     if (linha.Contains("senha:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.senha = linha.Replace("senha:", "");
+                        configuracao.senha = linha.Replace("senha:", "").Trim();
                     }
                     else
                     if (linha.Contains("BDEM:"))
                     {
                         // Sim. Então guarda a informação e abandona o loop
-                        configuracao.localizacaoEM = linha.Replace("BDEM:", "");
+                        configuracao.localizacaoEM = linha.Replace("BDEM:", "").Trim();
                     }
 
                 }
