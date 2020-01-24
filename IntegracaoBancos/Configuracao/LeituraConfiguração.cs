@@ -9,6 +9,7 @@ namespace IntegracaoBancos
 {
     public class LeituraConfiguração
     {
+        private string _caminho;
         public void gravarConfiguracao(ConfiguracaoServidores configuraçãoServidores)
         {
             StreamWriter writer = new StreamWriter("Configuração.txt", true);
@@ -25,6 +26,7 @@ namespace IntegracaoBancos
         public ConfiguracaoServidores LerConfiguracao()
         {
             var caminho = AppDomain.CurrentDomain.BaseDirectory;
+            _caminho = caminho;
             ConfiguracaoServidores configuracao = new ConfiguracaoServidores();
             StreamReader reader = new StreamReader(caminho + "Configuração.txt", true);
             using (reader)
@@ -68,14 +70,23 @@ namespace IntegracaoBancos
             }
             return configuracao;
         }
-        public void UltimoRegistro(RegistroEntrada registroEntrada)
+        public void UltimoRegistro(int id)
         {
-            File.Delete("UltimoRegistro.txt");
-            StreamWriter writer = new StreamWriter("UltimoRegistro.txt", true);
-            using (writer)
+            try
             {
-                writer.WriteLine(registroEntrada.Id.ToString());
+                File.Delete("UltimoRegistro.txt");
+                var writer = new StreamWriter(_caminho + "UltimoRegistro.txt", true);
+                using (writer)
+                {
+                    writer.WriteLine(id);
+                }
             }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            
         }
 
         public int lerRegistro()

@@ -12,19 +12,30 @@ namespace IntegracaoBancos
             using (SqlConnection sqlConn = SqlConecao())
             {
 
-                var cmd = new SqlCommand("SELECT [CD_LOG_ACESSO] ,[NU_MATRICULA] ,[NU_DATA_REQUISICAO] ,[TP_SENTIDO_CONSULTA] FROM [dbo].[LOG_ACESSO] " +
+                sqlConn.Open();
+                var cmd = new SqlCommand("SELECT CD_LOG_ACESSO , NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA FROM [dbo].[LOG_ACESSO]" +
                                           $"WHERE [CD_LOG_ACESSO] > {ultimoAluno} ORDER by [CD_LOG_ACESSO]", sqlConn);
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        registroEntradas.Add(new RegistroEntrada
+                        try
                         {
-                            Id = dr.GetInt32(0),
-                            Matricula = dr.GetInt32(1),
-                            Horario = dr.GetDateTime(2),
-                            Sentido = dr.GetInt32(3)
-                        });
+                            var id = dr.GetDecimal(0);
+                            decimal? matricula = dr.GetDecimal(1);
+                            var Horario = dr.GetDateTime(2);
+                            decimal? sentido = dr.GetDecimal(3);
+                            registroEntradas.Add(new RegistroEntrada
+                            {
+                                Id = Convert.ToInt32(id),
+                                Matricula = Convert.ToInt32(matricula),
+                                Horario = Horario,
+                                Sentido = Convert.ToInt32(sentido)
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                     }
                 }
 
@@ -44,19 +55,9 @@ namespace IntegracaoBancos
                 UserID = $"{configuracao.usuario}",
                 Password = $"{configuracao.senha}",
                 IntegratedSecurity = false
-            }; 
+            };
 
             var cn = new SqlConnection(stringdeConecao.ConnectionString);
-            try
-            {
-                cn.Open();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
             return cn;
         }
 
@@ -65,7 +66,11 @@ namespace IntegracaoBancos
             try
             {
                 var sqlConn = SqlConecao();
-                string sql = $"INSERT INTO [dbo].[LOG_ACESSO](CD_LOG_ACESSO, NU_MATRICULA, NU_DATA_REQUISICAO, TP_SENTIDO_CONSULTA) VALUES({registroEntrada.Id}, {registroEntrada.Matricula}, '{registroEntrada.Horario.ToString("yyyy/MM/dd hh:mm:ss")}', {registroEntrada.Sentido})";
+                sqlConn.Open();
+                string sql = $"INSERT INTO [dbo].[LOG_ACESSO](NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA,NU_DATA_REQUISICAO,NU_HORA_REQUISICAO,DT_PERSISTENCIA,NU_FUNCAO) " +
+                    $"VALUES({registroEntrada.Matricula}, '{registroEntrada.Horario.ToString("yyyy/MM/dd hh:mm:ss")}', {registroEntrada.Sentido}," +
+                    $"{registroEntrada.Horario.Year}{registroEntrada.Horario.Month}{registroEntrada.Horario.Day},{registroEntrada.Horario.Hour}{registroEntrada.Horario.Minute}," +
+                    $"'{registroEntrada.Horario.ToString("yyyy/MM/dd hh:mm:ss")}',0)";
                 var cmd = new SqlCommand(sql, sqlConn);
                 cmd.ExecuteNonQuery();
                 sqlConn.Close();
@@ -83,18 +88,29 @@ namespace IntegracaoBancos
             var registroEntradas = new List<RegistroEntrada>();
             using (SqlConnection sqlConn = SqlConecao())
             {
-                var cmd = new SqlCommand("SELECT [CD_LOG_ACESSO] ,[NU_MATRICULA] ,[NU_DATA_REQUISICAO] ,[TP_SENTIDO_CONSULTA] FROM [dbo].[LOG_ACESSO] ORDER by [CD_LOG_ACESSO]", sqlConn);
+                sqlConn.Open();
+                var cmd = new SqlCommand("SELECT CD_LOG_ACESSO , NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA FROM [dbo].[LOG_ACESSO] ORDER by [CD_LOG_ACESSO]", sqlConn);
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
                     {
-                        registroEntradas.Add(new RegistroEntrada
+                        try
                         {
-                            Id = dr.GetInt32(0),
-                            Matricula = dr.GetInt32(1),
-                            Horario = dr.GetDateTime(2),
-                            Sentido = dr.GetInt32(3)
-                        });
+                            var id = dr.GetDecimal(0);
+                            decimal? matricula = dr.GetDecimal(1);
+                            var Horario = dr.GetDateTime(2);
+                            decimal? sentido = dr.GetDecimal(3);
+                            registroEntradas.Add(new RegistroEntrada
+                            {
+                                Id = Convert.ToInt32(id),
+                                Matricula = Convert.ToInt32(matricula),
+                                Horario = Horario,
+                                Sentido = Convert.ToInt32(sentido)
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                        }
                     }
                 }
 

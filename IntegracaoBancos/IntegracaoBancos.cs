@@ -9,7 +9,7 @@ namespace IntegracaoBancos
 {
     class IntegracaoBancos
     {
-         [STAThread]
+        [STAThread]
         static void Main(string[] args)
         {
             int idUltimoAlunoBuscado = new LeituraConfiguração().lerRegistro();
@@ -31,14 +31,30 @@ namespace IntegracaoBancos
                             if (registro.Equals(registroEntradas.Last()))
                             {
                                 idUltimoAlunoBuscado = registro.Id;
-                                new LeituraConfiguração().UltimoRegistro(registro);
+                                new LeituraConfiguração().UltimoRegistro(registro.Id);
                             }
-                            if (InserirDados.ConsultaAluno(registro.Matricula))
+                            if (InserirDados.ConsultaAluno(registro.Matricula.Value))
                             {
                                 InserirDados.RegistraEntrada(registro);
                             }
-                            var sentido = registro.Sentido == 1 ? 'E' : 'S';
-                            Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
+                            char? sentido;
+                            if (registro.Sentido == 1)
+                            {
+                                sentido = 'E';
+                            }
+                            else
+                            {
+                                if (registro.Sentido == 2)
+                                {
+                                    sentido = 'S';
+                                }
+                                else
+                                {
+                                    sentido = null;
+                                }
+                            }
+                            var nulo = sentido == null? "nao tem entrada" : sentido.ToString();
+                            Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {nulo} ");
                         }
                     }
                 }

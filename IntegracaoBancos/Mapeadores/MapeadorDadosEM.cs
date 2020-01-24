@@ -15,7 +15,7 @@ namespace IntegracaoBancos
             var configuracao = new LeituraConfiguração().LerConfiguracao();
             string stringdeConecao = $@"DataSource=localhost; Database={configuracao.localizacaoEM}; username=sysdba; password =masterkey";
             string connectionString = stringdeConecao;
-            var cn = new FbConnection(connectionString); 
+            var cn = new FbConnection(connectionString);
             try
             {
                 cn.Open();
@@ -34,7 +34,7 @@ namespace IntegracaoBancos
             string SqlConsulta = $"SELECT ALUNMATRICULA FROM TBALUNO WHERE ALUNMATRICULA = {matricula};";
             using (var conn = SqlConecao())
             {
-                
+
                 var cmd = new FbCommand(SqlConsulta, conn);
                 using (var dr = cmd.ExecuteReader())
                 {
@@ -45,7 +45,22 @@ namespace IntegracaoBancos
         }
         public void RegistraEntrada(RegistroEntrada registroEntrada)
         {
-            var sentido = registroEntrada.Sentido == 1 ? 'E' : 'S';
+            char? sentido;
+            if (registroEntrada.Sentido == 1)
+            {
+                sentido = 'E';
+            }
+            else
+            {
+                if (registroEntrada.Sentido == 2)
+                {
+                    sentido = 'S';
+                }
+                else
+                {
+                    sentido = null;
+                }
+            }
 
             string comando = $"UPDATE TBREGISTROACESSO SET REGACGIRO = '{sentido}'" +
                         $"WHERE REGACMATRICULA = {registroEntrada.Matricula} AND REGACTIPOPESSOA = 1 AND " +
@@ -54,12 +69,12 @@ namespace IntegracaoBancos
             {
                 var cmd = new FbCommand(comando, conn);
 
-                if(cmd.ExecuteNonQuery() == 0)
+                if (cmd.ExecuteNonQuery() == 0)
                 {
                     cmd.CommandText = "INSERT INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO, REGACAUTOMATICO)" +
                             $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, " +
                             $"'{tranformahora(registroEntrada.Horario)}','{sentido}','S'); ";
-                    
+
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();
@@ -76,7 +91,7 @@ namespace IntegracaoBancos
         private string tranformaData(DateTime horario)
         {
             var aux = horario.ToString("yyyyMMdd");
-            return horario.ToString("yyyyMMdd"); 
+            return horario.ToString("yyyyMMdd");
         }
     }
 }

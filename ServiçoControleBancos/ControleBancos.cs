@@ -16,6 +16,7 @@ namespace ServicoControleBancos
     public partial class ControleBancos : ServiceBase
     {
         private int eventId = 1;
+        private int _ultimoRegistro = 0;
 
 
         public ControleBancos(string[] args)
@@ -61,25 +62,37 @@ namespace ServicoControleBancos
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
             MapeadorDadosEM InserirDados = new MapeadorDadosEM();
-            int idUltimoAlunoBuscado = new LeituraConfiguração().lerRegistro();
+            _ultimoRegistro = new LeituraConfiguração().lerRegistro();
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
             var DadosBuscados = new MapeadorDadosSql();
-            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroDoDia(idUltimoAlunoBuscado);
+            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroDoDia(_ultimoRegistro);
             if (registroEntradas.Count != 0)
             {
                 foreach (var registro in registroEntradas)
                 {
-                    if (registro.Equals(registroEntradas.Last()))
-                    {
-                        idUltimoAlunoBuscado = registro.Id;
-                        new LeituraConfiguração().UltimoRegistro(registro);
-                    }
-                    if (InserirDados.ConsultaAluno(registro.Matricula))
+                    if (InserirDados.ConsultaAluno(registro.Matricula.Value))
                     {
                         InserirDados.RegistraEntrada(registro);
                     }
-                    var sentido = registro.Sentido == 1 ? 'E' : 'S';
+                    char? sentido;
+                    if (registro.Sentido == 1)
+                    {
+                        sentido = 'E';
+                    }
+                    else
+                    {
+                        if (registro.Sentido == 2)
+                        {
+                            sentido = 'S';
+                        }
+                        else
+                        {
+                            sentido = null;
+                        }
+                    }
                     Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
+                    _ultimoRegistro = registro.Id;
+                    new LeituraConfiguração().UltimoRegistro(registro.Id);
                 }
             }
         }
