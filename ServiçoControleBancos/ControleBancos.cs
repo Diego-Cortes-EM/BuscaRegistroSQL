@@ -50,10 +50,11 @@ namespace ServicoControleBancos
 
         protected override void OnStart(string[] args)
         {
+            new ProcessoEntradaBancoEM().BuscarPorDia();
             eventLog1.WriteEntry("In OnStart.");
             // Set up a timer that triggers every minute.
             Timer timer = new Timer();
-            timer.Interval = 60000; // 60 seconds
+            timer.Interval = 60000 * 3; // 60 seconds
             timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
             timer.Start();
 
@@ -61,40 +62,10 @@ namespace ServicoControleBancos
 
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
-            MapeadorDadosEM InserirDados = new MapeadorDadosEM();
-            _ultimoRegistro = new LeituraConfiguração().lerRegistro();
+            
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-            var DadosBuscados = new MapeadorDadosSql();
-            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroDoDia(_ultimoRegistro);
-            if (registroEntradas.Count != 0)
-            {
-                foreach (var registro in registroEntradas)
-                {
-                    if (InserirDados.ConsultaAluno(registro.Matricula.Value))
-                    {
-                        InserirDados.RegistraEntrada(registro);
-                    }
-                    char? sentido;
-                    if (registro.Sentido == 1)
-                    {
-                        sentido = 'E';
-                    }
-                    else
-                    {
-                        if (registro.Sentido == 2)
-                        {
-                            sentido = 'S';
-                        }
-                        else
-                        {
-                            sentido = null;
-                        }
-                    }
-                    Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
-                    _ultimoRegistro = registro.Id;
-                    new LeituraConfiguração().UltimoRegistro(registro.Id);
-                }
-            }
+            new ProcessoEntradaBancoEM().BuscarPorUltimoRegistro();
+
         }
 
         protected override void OnStop()

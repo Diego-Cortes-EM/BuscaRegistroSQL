@@ -6,10 +6,16 @@ namespace IntegracaoBancos
 {
     public class MapeadorDadosSql
     {
-        public List<RegistroEntrada> BuscaRegistroDoDia(int ultimoAluno)
+        string _conexao;
+        public MapeadorDadosSql(string conexao)
         {
+            _conexao = conexao;
+        }
+        public List<RegistroEntrada> BuscaRegistroPeloUltimo(int ultimoAluno)
+        {
+
             var registroEntradas = new List<RegistroEntrada>();
-            using (SqlConnection sqlConn = SqlConecao())
+            using (SqlConnection sqlConn = new SqlConnection(_conexao))
             {
 
                 sqlConn.Open();
@@ -42,25 +48,47 @@ namespace IntegracaoBancos
                 sqlConn.Close();
             }
             return registroEntradas;
+
         }
 
-        private SqlConnection SqlConecao()
+        public List<RegistroEntrada> BuscaRegistroPorDia()
         {
-
-            var configuracao = new LeituraConfiguração().LerConfiguracao();
-            var stringdeConecao = new SqlConnectionStringBuilder
+            var dataHoje = DateTime.Now;
+            var registroEntradas = new List<RegistroEntrada>();
+            using (SqlConnection sqlConn = SqlConecao())
             {
-                DataSource = $"{configuracao.nomeServidor}",
-                InitialCatalog = $"{configuracao.nomeBanco}",
-                UserID = $"{configuracao.usuario}",
-                Password = $"{configuracao.senha}",
-                IntegratedSecurity = false
-            };
 
-            var cn = new SqlConnection(stringdeConecao.ConnectionString);
-            return cn;
+                sqlConn.Open();
+                var cmd = new SqlCommand("SELECT CD_LOG_ACESSO , NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA FROM [dbo].[LOG_ACESSO]" +
+                                          $"WHERE  DT_REQUISICAO > '{dataHoje.ToString("yyyy/MM/dd")}' ORDER by [CD_LOG_ACESSO]", sqlConn);
+                using (var dr = cmd.ExecuteReader())
+                {
+                    while (dr.Read())
+                    {
+                        try
+                        {
+                            var id = dr.GetDecimal(0);
+                            decimal? matricula = dr.GetDecimal(1);
+                            var Horario = dr.GetDateTime(2);
+                            decimal? sentido = dr.GetDecimal(3);
+                            registroEntradas.Add(new RegistroEntrada
+                            {
+                                Id = Convert.ToInt32(id),
+                                Matricula = Convert.ToInt32(matricula),
+                                Horario = Horario,
+                                Sentido = Convert.ToInt32(sentido)
+                            });
+                        }
+                        catch (Exception ex)
+                        {
+                        }
+                    }
+                }
+
+                sqlConn.Close();
+            }
+            return registroEntradas;
         }
-
         public void InserirRegistros(RegistroEntrada registroEntrada)
         {
             try

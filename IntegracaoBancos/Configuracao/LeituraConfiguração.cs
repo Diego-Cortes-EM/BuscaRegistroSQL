@@ -74,6 +74,7 @@ namespace IntegracaoBancos
         {
             try
             {
+                _caminho = AppDomain.CurrentDomain.BaseDirectory;
                 File.Delete("UltimoRegistro.txt");
                 var writer = new StreamWriter(_caminho + "UltimoRegistro.txt", true);
                 using (writer)
