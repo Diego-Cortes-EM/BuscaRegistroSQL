@@ -1,9 +1,7 @@
-﻿using IntegracaoBancos;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Timers;
-using IntegracaoBancos;
 
 namespace ServicoControleBancos
 {
@@ -54,9 +52,8 @@ namespace ServicoControleBancos
 
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
-            var integracao = new IntegracaoBancos.IntegracaoBancos();
-            string[] strin;
-            //integracao.Main();
+            var integracao = new (IntegracaoBancos) IntegracaoBancos();
+            
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
 
         }
