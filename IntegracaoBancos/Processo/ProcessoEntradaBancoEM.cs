@@ -8,9 +8,8 @@ namespace IntegracaoBancos
 {
     public class ProcessoEntradaBancoEM
     {
-        private void InserirRegistro(List<RegistroEntrada> registroEntradas)
+        private void InserirRegistro(List<RegistroEntrada> registroEntradas, MapeadorDadosEM InserirDados)
         {
-            MapeadorDadosEM InserirDados = new MapeadorDadosEM();
             if (registroEntradas.Count != 0)
             {
                 foreach (var registro in registroEntradas)
@@ -36,23 +35,19 @@ namespace IntegracaoBancos
                         }
                     }
                     Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
-                    new LeituraConfiguração().UltimoRegistro(registro.Id);
                 }
             }
         }
 
-        public void BuscarPorUltimoRegistro()
+        public void BuscarPorUltimoRegistro(MapeadorDadosSql DadosBuscados, MapeadorDadosEM mapeadorDadosEM)
         {
-            var ultimoRegistro = new LeituraConfiguração().lerRegistro();
-            var DadosBuscados = new MapeadorDadosSql();
-            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroPeloUltimo(ultimoRegistro);
-            InserirRegistro(registroEntradas);
+            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroPeloUltimo(0);
+            InserirRegistro(registroEntradas, mapeadorDadosEM);
         }
-        public void BuscarPorDia()
+        public void BuscarPorDia(MapeadorDadosSql DadosBuscados, MapeadorDadosEM mapeadorDadosEM)
         {
-            var DadosBuscados = new MapeadorDadosSql();
             List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroPorDia();
-            InserirRegistro(registroEntradas);
+            InserirRegistro(registroEntradas, mapeadorDadosEM);
         }
 
     }

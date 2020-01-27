@@ -10,8 +10,8 @@ namespace ControleEntreDoisBanco
         public RegistroCatraca()
         {
             InitializeComponent();
-            UltimoRegistro = new MapeadorDadosSql().BuscaUltimoRegistro();
-            textBoxid.Text = UltimoRegistro.ToString();
+            //UltimoRegistro = new MapeadorDadosSql().BuscaUltimoRegistro();
+            //textBoxid.Text = UltimoRegistro.ToString();
             textBoxid.Enabled = false;
         }
 
@@ -50,18 +50,18 @@ namespace ControleEntreDoisBanco
             {
                 registroEntrada.Sentido = 2;
             }
-            var mapeador = new MapeadorDadosSql();
-            mapeador.InserirRegistros(registroEntrada);
+            //var mapeador = new MapeadorDadosSql();
+            //mapeador.InserirRegistros(registroEntrada);
             UltimoRegistro++;
             textBoxid.Text = UltimoRegistro.ToString();
-            textBoxMatricula.Text = string.Empty; 
+            textBoxMatricula.Text = string.Empty;
         }
 
-        
+
 
         private bool PodeAcessar()
         {
-            if(checkBox1.Checked || checkBox2.Checked)
+            if (checkBox1.Checked || checkBox2.Checked)
             {
                 return true;
             }

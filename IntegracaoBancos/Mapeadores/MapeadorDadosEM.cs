@@ -10,29 +10,18 @@ namespace IntegracaoBancos
 {
     public class MapeadorDadosEM
     {
-        private FbConnection SqlConecao()
+        private string _stringDeConexao;
+        private Func<string> stringBancoFBC;
+
+        public MapeadorDadosEM(string stringconexao)
         {
-            var configuracao = new LeituraConfiguração().LerConfiguracao();
-            string stringdeConecao = $@"DataSource=localhost; Database={configuracao.localizacaoEM}; username=sysdba; password =masterkey";
-            string connectionString = stringdeConecao;
-            var cn = new FbConnection(connectionString);
-            try
-            {
-                cn.Open();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-
-            return cn;
+            _stringDeConexao = stringconexao.ToString();
         }
 
         public bool ConsultaAluno(int matricula)
         {
             string SqlConsulta = $"SELECT ALUNMATRICULA FROM TBALUNO WHERE ALUNMATRICULA = {matricula};";
-            using (var conn = SqlConecao())
+            using (var conn = new FbConnection(_stringDeConexao))
             {
 
                 var cmd = new FbCommand(SqlConsulta, conn);
@@ -40,58 +29,39 @@ namespace IntegracaoBancos
                 {
                     return dr.HasRows;
                 }
-                conn.Close();
             }
         }
+
         public void RegistraEntrada(RegistroEntrada registroEntrada)
         {
-            char? sentido;
-            if (registroEntrada.Sentido == 1)
+            char? sentido = null;
+            switch (registroEntrada.Sentido)
             {
-                sentido = 'E';
-            }
-            else
-            {
-                if (registroEntrada.Sentido == 2)
-                {
+                case 1:
+                    sentido = 'E';
+                    break;
+                case 2:
                     sentido = 'S';
-                }
-                else
-                {
-                    sentido = null;
-                }
+                    break;
             }
-
             string comando = $"UPDATE TBREGISTROACESSO SET REGACGIRO = '{sentido}'" +
                         $"WHERE REGACMATRICULA = {registroEntrada.Matricula} AND REGACTIPOPESSOA = 1 AND " +
-                        $"REGACDIA = {tranformaData(registroEntrada.Horario)} AND REGACHORA = '{tranformahora(registroEntrada.Horario)}'";
-            using (var conn = SqlConecao())
+                        $"REGACDIA = {registroEntrada.Horario.ToString("yyyyMMdd")} AND REGACHORA = '{registroEntrada.Horario.ToString("HH:mm:ss")}'";
+            using (var conn = new FbConnection(_stringDeConexao))
             {
                 var cmd = new FbCommand(comando, conn);
 
                 if (cmd.ExecuteNonQuery() == 0)
                 {
                     cmd.CommandText = "INSERT INTO TBREGISTROACESSO (REGACMATRICULA, REGACTIPOPESSOA, REGACDIA, REGACHORA, REGACGIRO, REGACAUTOMATICO)" +
-                            $"VALUES({registroEntrada.Matricula}, 1, {tranformaData(registroEntrada.Horario)}, " +
-                            $"'{tranformahora(registroEntrada.Horario)}','{sentido}','S'); ";
+                            $"VALUES({registroEntrada.Matricula}, 1, {registroEntrada.Horario.ToString("yyyyMMdd")}, " +
+                            $"'{registroEntrada.Horario.ToString("HH:mm:ss")}','{sentido}','S'); ";
 
                     cmd.ExecuteNonQuery();
                 }
                 conn.Close();
             }
 
-        }
-
-        private string tranformahora(DateTime horario)
-        {
-            var aux = horario.ToString("HH:mm:ss");
-            return horario.ToString("HH:mm:ss");
-        }
-
-        private string tranformaData(DateTime horario)
-        {
-            var aux = horario.ToString("yyyyMMdd");
-            return horario.ToString("yyyyMMdd");
         }
     }
 }

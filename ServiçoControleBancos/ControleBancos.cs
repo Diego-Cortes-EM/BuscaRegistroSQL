@@ -50,7 +50,7 @@ namespace ServicoControleBancos
 
         protected override void OnStart(string[] args)
         {
-            new ProcessoEntradaBancoEM().BuscarPorDia();
+            //new ProcessoEntradaBancoEM().BuscarPorDia();
             eventLog1.WriteEntry("In OnStart.");
             // Set up a timer that triggers every minute.
             Timer timer = new Timer();

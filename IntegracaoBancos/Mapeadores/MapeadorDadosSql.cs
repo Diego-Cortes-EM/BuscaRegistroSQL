@@ -6,16 +6,18 @@ namespace IntegracaoBancos
 {
     public class MapeadorDadosSql
     {
-        string _conexao;
-        public MapeadorDadosSql(string conexao)
+        private string _stringConexao;
+
+        public MapeadorDadosSql(string stringBancoSQL)
         {
-            _conexao = conexao;
+           _stringConexao = stringBancoSQL.ToString();
         }
+
         public List<RegistroEntrada> BuscaRegistroPeloUltimo(int ultimoAluno)
         {
 
             var registroEntradas = new List<RegistroEntrada>();
-            using (SqlConnection sqlConn = new SqlConnection(_conexao))
+            using (var sqlConn = new SqlConnection(_stringConexao))
             {
 
                 sqlConn.Open();
@@ -55,7 +57,7 @@ namespace IntegracaoBancos
         {
             var dataHoje = DateTime.Now;
             var registroEntradas = new List<RegistroEntrada>();
-            using (SqlConnection sqlConn = SqlConecao())
+            using (var sqlConn = new SqlConnection(_stringConexao))
             {
 
                 sqlConn.Open();
@@ -93,7 +95,7 @@ namespace IntegracaoBancos
         {
             try
             {
-                var sqlConn = SqlConecao();
+                var sqlConn = new SqlConnection(_stringConexao);
                 sqlConn.Open();
                 string sql = $"INSERT INTO [dbo].[LOG_ACESSO](NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA,NU_DATA_REQUISICAO,NU_HORA_REQUISICAO,DT_PERSISTENCIA,NU_FUNCAO) " +
                     $"VALUES({registroEntrada.Matricula}, '{registroEntrada.Horario.ToString("yyyy/MM/dd hh:mm:ss")}', {registroEntrada.Sentido}," +
@@ -114,7 +116,7 @@ namespace IntegracaoBancos
         public int BuscaUltimoRegistro()
         {
             var registroEntradas = new List<RegistroEntrada>();
-            using (SqlConnection sqlConn = SqlConecao())
+            using (var sqlConn = new SqlConnection(_stringConexao))
             {
                 sqlConn.Open();
                 var cmd = new SqlCommand("SELECT CD_LOG_ACESSO , NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA FROM [dbo].[LOG_ACESSO] ORDER by [CD_LOG_ACESSO]", sqlConn);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,12 @@ namespace IntegracaoBancos
     public class UltilitariosStringConexao
     {
         ConfiguracaoServidores _configuracaoServidores;
+
         public UltilitariosStringConexao(ConfiguracaoServidores configuracaoServidores)
         {
             _configuracaoServidores = configuracaoServidores;
         }
+
         public string StringBancoSQL()
         {
             var stringSql = new SqlConnectionStringBuilder
@@ -26,9 +29,9 @@ namespace IntegracaoBancos
             };
             return stringSql.ToString();
         }
-        public void StringBancoFBC()
+        public string StringBancoFBC()
         {
-
+            return _configuracaoServidores.localizacaoEM;
         }
     }
 }
