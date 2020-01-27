@@ -11,7 +11,6 @@ namespace IntegracaoBancos
     public class MapeadorDadosEM
     {
         private string _stringDeConexao;
-        private Func<string> stringBancoFBC;
 
         public MapeadorDadosEM(string stringconexao)
         {
@@ -20,10 +19,10 @@ namespace IntegracaoBancos
 
         public bool ConsultaAluno(int matricula)
         {
-            string SqlConsulta = $"SELECT ALUNMATRICULA FROM TBALUNO WHERE ALUNMATRICULA = {matricula};";
+            string SqlConsulta = $"SELECT ALUNMATRICULA FROM TBALUNO WHERE ALUNMATRICULA = {matricula}";
             using (var conn = new FbConnection(_stringDeConexao))
             {
-
+                conn.Open();
                 var cmd = new FbCommand(SqlConsulta, conn);
                 using (var dr = cmd.ExecuteReader())
                 {
@@ -47,8 +46,10 @@ namespace IntegracaoBancos
             string comando = $"UPDATE TBREGISTROACESSO SET REGACGIRO = '{sentido}'" +
                         $"WHERE REGACMATRICULA = {registroEntrada.Matricula} AND REGACTIPOPESSOA = 1 AND " +
                         $"REGACDIA = {registroEntrada.Horario.ToString("yyyyMMdd")} AND REGACHORA = '{registroEntrada.Horario.ToString("HH:mm:ss")}'";
+
             using (var conn = new FbConnection(_stringDeConexao))
             {
+                conn.Open();
                 var cmd = new FbCommand(comando, conn);
 
                 if (cmd.ExecuteNonQuery() == 0)

@@ -31,7 +31,7 @@ namespace IntegracaoBancos
         }
         public string StringBancoFBC()
         {
-            return _configuracaoServidores.localizacaoEM;
+            return $@"DataSource=localhost; Database={_configuracaoServidores.localizacaoEM}; username=sysdba; password =masterkey";
         }
     }
 }

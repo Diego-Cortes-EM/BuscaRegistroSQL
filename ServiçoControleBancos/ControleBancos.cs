@@ -1,23 +1,15 @@
 ﻿using IntegracaoBancos;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
+using IntegracaoBancos;
 
 namespace ServicoControleBancos
 {
     public partial class ControleBancos : ServiceBase
     {
         private int eventId = 1;
-        private int _ultimoRegistro = 0;
-
 
         public ControleBancos(string[] args)
         {
@@ -50,9 +42,9 @@ namespace ServicoControleBancos
 
         protected override void OnStart(string[] args)
         {
-            //new ProcessoEntradaBancoEM().BuscarPorDia();
+            
             eventLog1.WriteEntry("In OnStart.");
-            // Set up a timer that triggers every minute.
+            
             Timer timer = new Timer();
             timer.Interval = 60000 * 3; // 60 seconds
             timer.Elapsed += new ElapsedEventHandler(this.OnTimer);
@@ -62,9 +54,10 @@ namespace ServicoControleBancos
 
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
-            
+            var integracao = new IntegracaoBancos.IntegracaoBancos();
+            string[] strin;
+            //integracao.Main();
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
-            new ProcessoEntradaBancoEM().BuscarPorUltimoRegistro();
 
         }
 

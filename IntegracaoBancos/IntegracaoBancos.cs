@@ -1,19 +1,20 @@
-﻿using System;
+﻿using IntegracaoBancos.Configuracao;
+using System;
 using System.Collections.Specialized;
 using System.Configuration;
 
 namespace IntegracaoBancos
 {
-    class IntegracaoBancos
+    public class IntegracaoBancos
     {
-        [STAThread]
-        static void Main(string[] args)
+        public static  void Main()
         {
             var appSettings = ConfigurationManager.AppSettings;
             var configuracaoServidores = principalmain(appSettings);
             var stringConexao = new UltilitariosStringConexao(configuracaoServidores);
             var mapeadorDadosEM = new MapeadorDadosEM(stringConexao.StringBancoFBC());
             var mapeadorDadosSql = new MapeadorDadosSql(stringConexao.StringBancoSQL());
+            var ultimoRegistro = new UltimoRegistro();
 
             var ControleData = DateTime.Now;
             while (true)
@@ -23,7 +24,7 @@ namespace IntegracaoBancos
                 {
                     Console.WriteLine($"Valor a ser puchado :{ControleData}");
                     ControleData = ControleData.AddMinutes(1);
-                    new ProcessoEntradaBancoEM().BuscarPorUltimoRegistro(mapeadorDadosSql, mapeadorDadosEM);
+                    new ProcessoEntradaBancoEM().BuscarPorUltimoRegistro(mapeadorDadosSql, mapeadorDadosEM, ultimoRegistro);
                 }
             }
         }
@@ -41,6 +42,5 @@ namespace IntegracaoBancos
             return configuracaoServidor;
 
         }
-
     }
 }

@@ -96,6 +96,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuracao\ConfiguracaoServidores.cs" />
+    <Compile Include="Configuracao\UltimoRegistro.cs" />
     <Compile Include="Mapeadores\MapeadorDadosEM.cs" />
     <Compile Include="Mapeadores\MapeadorDadosSql.cs" />
     <Compile Include="IntegracaoBancos.cs" />
