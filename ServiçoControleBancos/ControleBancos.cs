@@ -2,6 +2,7 @@
 using System.Runtime.InteropServices;
 using System.ServiceProcess;
 using System.Timers;
+using IntegracaoBancos;
 
 namespace ServicoControleBancos
 {
@@ -52,8 +53,7 @@ namespace ServicoControleBancos
 
         private void OnTimer(object sender, ElapsedEventArgs e)
         {
-            var integracao = new (IntegracaoBancos) IntegracaoBancos();
-            
+            new Integracao().Submain();
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
 
         }

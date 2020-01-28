@@ -6,7 +6,12 @@ namespace IntegracaoBancos
 {
     public class ProcessoEntradaBancoEM
     {
-        private void InserirRegistro(List<RegistroEntrada> registroEntradas, MapeadorDadosEM InserirDados, UltimoRegistro ultimoRegistro)
+        private UltimoRegistro _ultimoRegistro;
+        public ProcessoEntradaBancoEM()
+        {
+            _ultimoRegistro = new UltimoRegistro();
+        }
+        public void InserirRegistro(List<RegistroEntrada> registroEntradas, MapeadorDadosEM InserirDados)
         {
             if (registroEntradas.Count != 0)
             {
@@ -33,21 +38,21 @@ namespace IntegracaoBancos
                         }
                     }
                     Console.WriteLine($"{registro.Id} - {registro.Matricula} - {registro.Horario.ToString()} - {sentido} ");
-                    ultimoRegistro.UltimoRegistroAcesso(registro);
                 }
             }
         }
 
-        public void BuscarPorUltimoRegistro(MapeadorDadosSql DadosBuscados, MapeadorDadosEM mapeadorDadosEM, UltimoRegistro ultimoRegistro)
+        public List<RegistroEntrada> BuscarPorUltimosRegistros(MapeadorDadosSql DadosBuscados)
         {
-            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroPeloUltimo(ultimoRegistro.LerRegistro());
-            InserirRegistro(registroEntradas, mapeadorDadosEM, ultimoRegistro);
+            return DadosBuscados.BuscaRegistroPeloUltimo(_ultimoRegistro.LerRegistro());
         }
-        public void BuscarPorDia(MapeadorDadosSql DadosBuscados, MapeadorDadosEM mapeadorDadosEM, UltimoRegistro ultimoRegistro)
+        public List<RegistroEntrada> BuscarPorDia(MapeadorDadosSql DadosBuscados, DateTime dateTime)
         {
-            List<RegistroEntrada> registroEntradas = DadosBuscados.BuscaRegistroPorDia();
-            InserirRegistro(registroEntradas, mapeadorDadosEM, ultimoRegistro);
+            return DadosBuscados.BuscaRegistroPorDia(dateTime);
         }
-
+        public void RegistraUltimoRegistro(RegistroEntrada registroEntrada)
+        {
+            _ultimoRegistro.UltimoRegistroAcesso(registroEntrada);
+        }
     }
 }

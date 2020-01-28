@@ -10,7 +10,7 @@ namespace IntegracaoBancos
 
         public MapeadorDadosSql(string stringBancoSQL)
         {
-           _stringConexao = stringBancoSQL.ToString();
+            _stringConexao = stringBancoSQL.ToString();
         }
 
         public List<RegistroEntrada> BuscaRegistroPeloUltimo(int ultimoAluno)
@@ -53,16 +53,19 @@ namespace IntegracaoBancos
 
         }
 
-        public List<RegistroEntrada> BuscaRegistroPorDia()
+        public List<RegistroEntrada> BuscaRegistroPorDia(DateTime? dataBusca)
         {
-            var dataHoje = DateTime.Now;
+            if (dataBusca == null)
+            {
+                dataBusca = DateTime.Now;
+            }
             var registroEntradas = new List<RegistroEntrada>();
             using (var sqlConn = new SqlConnection(_stringConexao))
             {
 
                 sqlConn.Open();
                 var cmd = new SqlCommand("SELECT CD_LOG_ACESSO , NU_CREDENCIAL ,DT_REQUISICAO ,TP_SENTIDO_CONSULTA FROM [dbo].[LOG_ACESSO]" +
-                                          $"WHERE  DT_REQUISICAO > '{dataHoje.ToString("yyyy/MM/dd")}' ORDER by [CD_LOG_ACESSO]", sqlConn);
+                                          $"WHERE  DT_REQUISICAO > '{dataBusca.Value.ToString("yyyy/MM/dd")}' ORDER by [CD_LOG_ACESSO]", sqlConn);
                 using (var dr = cmd.ExecuteReader())
                 {
                     while (dr.Read())
