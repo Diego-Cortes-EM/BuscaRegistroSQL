@@ -52,7 +52,7 @@ namespace IntegracaoBancos
         }
         public void RegistraUltimoRegistro(RegistroEntrada registroEntrada)
         {
-            _ultimoRegistro.UltimoRegistroAcesso(registroEntrada);
+            _ultimoRegistro.UltimoRegistroAcesso(registroEntrada.Id);
         }
     }
 }

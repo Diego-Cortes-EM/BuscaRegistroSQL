@@ -10,7 +10,7 @@ namespace IntegracaoBancos
 
         public MapeadorDadosSql(string stringBancoSQL)
         {
-            _stringConexao = stringBancoSQL.ToString();
+            _stringConexao = stringBancoSQL;
         }
 
         public List<RegistroEntrada> BuscaRegistroPeloUltimo(int ultimoAluno)

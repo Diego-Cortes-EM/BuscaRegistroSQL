@@ -5,7 +5,12 @@
 	Para facilitar trabalho e colocar funcionadidade como aviso para os pais horario de entrada e saida dos seus filhos 
 
 		@tag1
-		Cenario:De tempos em tempos busca os registros cadastrados no Servidor do Sql Server 
-		Dado que eu processe esses registros vindo do SQLServer 
-		Quando faco a transação de dados de um banco ao outro 
-		Então sou informado que o foi transferidos todos com sucesso 
+		Cenario: Primeira vez no dia puchar todos registros do dia 
+		Dado que abre o sistema na primeira vez no dia 
+		Então fazer a sicronização de todos os registros de acesso do dia 
+
+		@tag2
+		Cenario:De tempos em tempos sicronize os registros 
+		Dado que o tempo foi atigindo 
+		Então faça a sicronização dos registros por ultimo ate o mais atual 
+		 

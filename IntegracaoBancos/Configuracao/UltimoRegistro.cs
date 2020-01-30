@@ -5,13 +5,14 @@ namespace IntegracaoBancos.Configuracao
 {
     public class UltimoRegistro
     {
-        public void UltimoRegistroAcesso(RegistroEntrada registroEntrada)
+        public void UltimoRegistroAcesso(int Id)
         {
+            var caminho = AppDomain.CurrentDomain.BaseDirectory;
             File.Delete("UltimoRegistro.txt");
-            StreamWriter writer = new StreamWriter("UltimoRegistro.txt", true);
+            StreamWriter writer = new StreamWriter(caminho + "UltimoRegistro.txt", true);
             using (writer)
             {
-                writer.WriteLine(registroEntrada.Id.ToString());
+                writer.WriteLine(Id.ToString());
             }
         }
 

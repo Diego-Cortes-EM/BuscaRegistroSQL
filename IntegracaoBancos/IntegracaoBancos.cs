@@ -9,17 +9,7 @@ namespace IntegracaoBancos
     {
         public static void Main()
         {
-            var ControleData = DateTime.Now;
-            while (true)
-            {
-                var ehMaior = DateTime.Compare(ControleData, DateTime.Now);
-                if (ehMaior < 0)
-                {
-                    new Integracao().Submain();
-                    Console.WriteLine($"Valor a ser puchado :{ControleData}");
-                    ControleData = ControleData.AddMinutes(1);
-                }
-            }
+            new Integracao().Submain(5);
         }
     }
 }
